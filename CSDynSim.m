@@ -1,11 +1,13 @@
-function [ xdot ] = CSDynamics( primal )
+function [ xdot ] = CSDynSim( x,u )
 %Cubesat dynamics using DCM
 %Constant Matrices
-N = length(primal.nodes);
 %sumMOI is the sum of the moments of inertial off all the bodies (three
 %momentum wheels + the body) about their centers of mass and the moment of
 %inertia about the center of mass of the satellite expressed int the body
 %frame
+
+N=1;
+
 sumMOI = [0.00152828000000000,2.11600000000000e-05,2.11600000000000e-05;
     2.11600000000000e-05,0.00152828000000000,2.11600000000000e-05;
     2.11600000000000e-05,2.11600000000000e-05,0.00152828000000000;];
@@ -27,8 +29,6 @@ Iw3 = [5.07000000000000e-05,0,0;
     0,0,0.000101000000000000;];
 
 
-%extracting and reshaping from primal
-x = primal.states;
 %wheels speeds
 ww = x(1:3,:);
 %putting them in vector form
@@ -45,8 +45,6 @@ wb = x(4:6,:);
 %quaternion between body and inertial
 qR = x(7:10,:);
 
-%wheel acceleration (which is the control)
-u = primal.controls;
 %putting them in vector form
 u1 = zeros(3,N);
 u1(1,:) = u(1,:);

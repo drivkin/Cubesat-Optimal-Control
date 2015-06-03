@@ -1,4 +1,4 @@
-function [ xdot ] = CSDynamics( primal )
+function [ xdot ] = CSPDynamics( primal )
 %Cubesat dynamics using DCM
 %Constant Matrices
 N = length(primal.nodes);
@@ -12,6 +12,7 @@ sumMOI = [0.00152828000000000,2.11600000000000e-05,2.11600000000000e-05;
 sumMOIinv = [654.577898071825,-8.93927375258147,-8.93927375258147;
     -8.93927375258147,654.577898071825,-8.93927375258147;
     -8.93927375258147,-8.93927375258147,654.577898071825];
+
 %Moments of inertia of the reaction wheels about their centers of mass
 % expressed in the body frame
 Iw1 = [0.000101000000000000,0,0;
@@ -29,8 +30,10 @@ Iw3 = [5.07000000000000e-05,0,0;
 
 %extracting and reshaping from primal
 x = primal.states;
+%pseudo wheel speeds
+pww = x(1:6,:);
 %wheels speeds
-ww = x(1:3,:);
+ww = x(7:9,:);
 %putting them in vector form
 ww1 = zeros(3,N);
 ww1(1,:) = ww(1,:);
@@ -40,13 +43,19 @@ ww3 = zeros(3,N);
 ww3(3,:) = ww(3,:);
 
 %angular velocity of body wrt inertial
-wb = x(4:6,:);
+wb = x(10:12,:);
 
 %quaternion between body and inertial
-qR = x(7:10,:);
+qR = x(13:16,:);
 
-%wheel acceleration (which is the control)
-u = primal.controls;
+%pseudo wheel accelerations (which is the control)
+up = primal.controls;
+
+%total acceleration is the sum of the four pseudo wheel accelerations
+u(1,:) = sum(up(1:4,:),1);
+u(2,:) = sum(up(5:8,:),1);
+u(3,:) = sum(up(9:12,:),1);
+
 %putting them in vector form
 u1 = zeros(3,N);
 u1(1,:) = u(1,:);
@@ -57,10 +66,15 @@ u3(3,:) = u(3,:);
 
 %implementing dynamics
 
-%wheel acceleration is the control
+
+pwwdot(1,:) = up(1,:)+up(2,:);
+pwwdot(2,:) = up(3,:)+up(4,:);
+pwwdot(3,:) = up(5,:)+up(6,:);
+pwwdot(4,:) = up(7,:)+up(8,:);
+pwwdot(5,:) = up(9,:)+up(10,:);
+pwwdot(6,:) = up(11,:)+up(12,:);
+
 wwdot = u;
-
-
 wbdot = zeros(3,N);
 qRdot = zeros(4,N);
 for i=1:N
@@ -81,9 +95,9 @@ end
 
 %recombining into xdot
 xdot = zeros(size(x));
-
-xdot(1:3,:) = wwdot;
-xdot(4:6,:) = wbdot;
-xdot(7:10,:) = qRdot;
+xdot(1:6,:) = pwwdot;
+xdot(7:9,:) = wwdot;
+xdot(10:12,:) = wbdot;
+xdot(13:16,:) = qRdot;
 
 end

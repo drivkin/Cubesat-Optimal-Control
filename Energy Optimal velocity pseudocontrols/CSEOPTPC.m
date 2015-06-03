@@ -1,7 +1,6 @@
 %cubesat time optimal control
-%32 nodes but with guess from 16node solution
-close all;
 clear all;
+
 %===================
 % Problem variables:
 %-------------------
@@ -13,18 +12,18 @@ clear all;
 % 
 % 
 % 
-% controls = wheel acceleration (rad/s^2)
+% controls = wheel acceleration (rad/s^2) (6, 2 per wheel (positive and
+% negative))
+% velocity pseudocontrols  (6, 2 for each wheel)
 %===================
-
-%-------------------------------------------
-% Guess
-%-------------------------------------------
-load('25Nsol');
-guess.states = x;
-guess.controls = u;
-guess.time = t;
-
-algorithm.guess = guess;
+makeGuess = 1;
+if(makeGuess)
+    load('OEPC32Nsoln'); 
+    guess.states = x;
+    guess.controls = u;
+    guess.time = t;
+    algorithm.guess = guess;
+end
 
 
 %---------------------------------------
@@ -33,15 +32,15 @@ algorithm.guess = guess;
 bounds.lower.states = [-100; -100; -100; -10; -10;-10; -1;-1;-1;-1];
 bounds.upper.states = -bounds.lower.states;
 
-bounds.lower.controls = [-30;-30;-30];
-bounds.upper.controls = -bounds.lower.controls;
+bounds.lower.controls = [0;-30;0;-30;0;-30;0;-30;0;-30;0;-30]; % first six are actual controls, the next six are the velocity pseudo
+bounds.upper.controls = [30;0;30;0;30;0;30;0;30;0;30;0];
 
 %------------------
 % bound the horizon
 %------------------
 
-bounds.lower.time 	= [0; 0];				
-bounds.upper.time	= [0; 5];
+bounds.lower.time 	= [0; 10];				
+bounds.upper.time	= [0; 10]; %tf must be no greater than 10
 
 %-------------------------------------------
 % Set up the bounds on the endpoint function
@@ -53,35 +52,46 @@ quat = angle2quat(yaw,pitch,roll);
 
 bounds.lower.events = [0;0;0;0;0;0;1;0;0;0; %initial wheel speed, ang vel, quaternion
     0;0;0;quat']; %final ang vel, quaternion
-bounds.upper.events = bounds.lower.events;
+bounds.upper.events = bounds.lower.events; 
+
+%path constraints
+bounds.lower.path = [0;0;0;0;0;0];
+bounds.upper.path = bounds.lower.path;
 
 
+CSMEprob.cost = 'CSMEPCCost';
+CSMEprob.dynamics = 'CSMEPCDynamics';
+CSMEprob.events = 'CSEvents';
+CSMEprob.path = 'CSMEPCPath';
 
+CSMEprob.bounds = bounds;
 
-CSMTprob.cost = 'CSMTCost';
-CSMTprob.dynamics = 'CSDynamics';
-CSMTprob.events = 'CSEvents';
+%algorithm.mode = 'accurate'; 
 
-CSMTprob.bounds = bounds;
-
-
-algorithm.nodes = [50];					    % represents some measure of desired solution accuracy
+algorithm.nodes = [32];					    % represents some measure of desired solution accuracy
 
 % Call dido
 tStart= cputime;    % start CPU clock 
-[cost, primal, dual] = dido(CSMTprob, algorithm);
+[cost, primal, dual] = dido(CSMEprob, algorithm);
 runTime = cputime-tStart
 % Ta da!
+y = sin(linspace(0,800*pi,8192*2));
+sound(y)
+%%
+%save solution
+%plot attitude( quaternion entries)
+t = primal.nodes;
+x = primal.states;
+u = primal.controls;
+savename = ['OEPC' num2str(algorithm.nodes) 'Nsoln'];
+save(savename,'t','u','x');
 
 %%
 close all
 %plot attitude( quaternion entries)
 t = primal.nodes;
-x = primal.states;
 u = primal.controls;
-%save solution
-save('100Nsol','t','u','x');
-%%
+x = primal.states;
 q = x(7:10,:);
 
 figure
@@ -117,17 +127,30 @@ title('reaction wheel speeds (rad/s')
 
 %controls
 figure
-
-plot(t,u(1,:));
-hold all
-plot(t,u(2,:));
-plot(t,u(3,:));
-legend('u1','u2','u3');
+plot(t,u(1,:),'b');
+hold on;
+plot(t,u(2,:),'b');
+plot(t,u(3,:),'g');
+plot(t,u(4,:),'g');
+plot(t,u(5,:),'r');
+plot(t,u(6,:),'r');
+title('controls');
 
 %hamiltonian
 figure
 plot(t,dual.Hamiltonian)
 title('Hamiltonian');
+
+%pseudo controls
+figure
+plot(t,u(7,:),'b');
+hold on;
+plot(t,u(8,:),'b');
+plot(t,u(9,:),'g');
+plot(t,u(10,:),'g');
+plot(t,u(11,:),'r');
+plot(t,u(12,:),'r');
+title('pseudo-controls');
 
 
 

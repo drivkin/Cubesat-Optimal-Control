@@ -1,4 +1,4 @@
-function [ xdot ] = CSDynamics( primal )
+function [ xdot ] = CSMEPCDynamics( primal )
 %Cubesat dynamics using DCM
 %Constant Matrices
 N = length(primal.nodes);
@@ -45,8 +45,14 @@ wb = x(4:6,:);
 %quaternion between body and inertial
 qR = x(7:10,:);
 
+
+
 %wheel acceleration (which is the control)
-u = primal.controls;
+up = primal.controls;
+u(1,:) = up(1,:)+up(2,:);
+u(2,:) = up(3,:)+up(4,:);
+u(3,:) = up(5,:)+up(6,:);
+
 %putting them in vector form
 u1 = zeros(3,N);
 u1(1,:) = u(1,:);
@@ -59,8 +65,6 @@ u3(3,:) = u(3,:);
 
 %wheel acceleration is the control
 wwdot = u;
-
-
 wbdot = zeros(3,N);
 qRdot = zeros(4,N);
 for i=1:N

@@ -1,4 +1,4 @@
-function [ eF ] = CSEvents(primal)
+function [ eF ] = CSPEvents(primal)
 %UNTITLED2 Summary of this function goes here
 %   The error function consists of inital DCM, which will be 0, and the
 
@@ -17,5 +17,5 @@ x = primal.states;
 %at the end, the velocity is zero and the angle is what you set it
 %but you don't care about wheel speeds
 eF = [x(:,1);
-    x(4:end,end)];
+    x(end-6:end,end)];
 end

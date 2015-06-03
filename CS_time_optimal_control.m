@@ -60,14 +60,15 @@ runTime = cputime-tStart
 % Ta da!
 
 %%
-close all
+
 %plot attitude( quaternion entries)
 t = primal.nodes;
 u = primal.controls;
 x = primal.states;
 q = x(7:10,:);
-save('16Nsol','t','u','x');
-
+save(['MT' num2str(algorithm.nodes) 'Nsol','t','u','x');
+%%
+close all
 figure
 plot(t,q(1,:));
 hold all
@@ -75,7 +76,7 @@ plot(t,q(2,:));
 plot(t,q(3,:));
 plot(t,q(4,:));
 legend('q1','q2','q3','q4')
-title('quaternion');
+title('quaternions');
 
 
 %omega b_i
@@ -86,7 +87,7 @@ hold all
 plot(t,wb(2,:))
 plot(t,wb(3,:))
 legend('x','y','z');
-title('angular velocity of cubesat in body frame')
+title('angular velocity of cubesat in expressed body frame')
 
 
 %wheel speeds
@@ -97,7 +98,7 @@ hold all
 plot(t,ww(2,:))
 plot(t,ww(3,:))
 legend('w1','w2','w3');
-title('reaction wheel speeds (rad/s')
+title('reaction wheel speeds (rad/s)')
 
 %controls
 figure
@@ -107,11 +108,45 @@ hold all
 plot(t,u(2,:));
 plot(t,u(3,:));
 legend('u1','u2','u3');
+title('controls (rad/s^2)');
 
 %hamiltonian
 figure
 plot(t,dual.Hamiltonian)
 title('Hamiltonian');
+
+%% feasibility
+t0 = t(1);
+tf = t(end);
+
+initState = primal.states(:,1);
+us = @(ts) [interp1(t,u(1,:),ts);
+            interp1(t,u(2,:),ts);
+            interp1(t,u(3,:),ts)];
+        
+us(1)
+system = @(ts,xs) CSDynSim(xs,us(ts));
+
+%system(1,x(:,1))
+
+[ts, xOde45] = ode45(system,[t0 tf],initState);
+
+x45 = xOde45';
+q45 = x45(7:10,:);
+
+figure
+plot(ts,q45(1,:),'k');
+hold on
+plot(ts,q45(2,:),'b');
+plot(ts,q45(3,:),'g');
+plot(ts,q45(4,:),'r');
+scatter(t,q(1,:),'k');
+scatter(t,q(2,:),'b');
+scatter(t,q(3,:),'g');
+scatter(t,q(4,:),'r');
+legend('q1','q2','q3','q4')
+title('feasibility analysis');
+
 
 
 
