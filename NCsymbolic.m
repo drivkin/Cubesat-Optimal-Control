@@ -60,7 +60,7 @@ fww = [u1;
     
 fq =1/2* [ -wb1*q1 - wb2*q2 - wb3*q3;
             wb1*q0 + wb3*q2 - wb2*q3;
-            wb2*q0 - wb3*q1 - wb1*q3;
+            wb2*q0 - wb3*q1 + wb1*q3;
             wb3*q0 + wb2*q1 - wb1*q2];
         
 term1 = WCI*Isum*wci;
@@ -88,13 +88,13 @@ u = [u1;
 %H = abs(ww1*u1)+abs(ww2*u2)+abs(ww3*u3)+lambda.'*f;
 
 %uv solution
-H = ww1*u1+ww2*u2+ww3*u3+lambda.'*f;
+%H = ww1*u1+ww2*u2+ww3*u3+lambda.'*f;
 
 %u^2v^2 solution
 %H = ww1^2*u1^2+ww2^2*u2^2+ww3^2*u3^2+lambda.'*f;
 
 %tf solution
-%H = lambda.'*f;
+H = lambda.'*f;
 
 LoH = H+mu.'*u;
 
@@ -105,6 +105,7 @@ end
 HMC = HMC.';
 
 for i = 1:10
-    lambdaDot = diff(H,x(i));
+    lambdaDot(i) = -diff(H,x(i));
 end
+lambdaDot = lambdaDot.';
         

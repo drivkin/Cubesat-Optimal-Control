@@ -1,4 +1,3 @@
-
 NCsymbolic
 % v^2 cost
 load('50NodeTimeOptimalSolutionWorkspace');
@@ -12,6 +11,7 @@ sumMOI = [0.00152828000000000,2.11600000000000e-05,2.11600000000000e-05;
 sumMOIinv = [654.577898071825,-8.93927375258147,-8.93927375258147;
     -8.93927375258147,654.577898071825,-8.93927375258147;
     -8.93927375258147,-8.93927375258147,654.577898071825];
+
 %Moments of inertia of the reaction wheels about their centers of mass
 % expressed in the body frame
 Iw1 = [0.000101000000000000,0,0;
@@ -48,7 +48,7 @@ for i =1:algorithm.nodes
 %         u(1,i),u(2,i),u(3,i),dual.states(:,i),d,sumMOI,sumMOIinv,...
 %         Iw1,Iw2,Iw3};
     
-    HMCval(:,i) = HMC;
+    lamdaDotVal(:,i) = HMC;
     i
     for j = 1:length(allNums)
         HMCval(:,i) = subs(HMCval(:,i),allSyms{j},allNums{j});
@@ -56,16 +56,3 @@ for i =1:algorithm.nodes
 
 end
 HMCval = double(HMCval);
-
-
-
-
-%%
-figure
-plot(t,HMCval(1,:));
-hold all
-plot(t,HMCval(2,:));
-plot(t,HMCval(3,:));
-legend('dH/du1','dH/du2','dH/du3');
-title('Hamiltonian Minimization Condition');
-

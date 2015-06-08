@@ -18,7 +18,7 @@ clear all;
 %===================
 makeGuess = 1;
 if(makeGuess)
-    load('OEPC32Nsoln'); 
+    load('OEPC30Nsoln'); 
     guess.states = x;
     guess.controls = u;
     guess.time = t;
@@ -51,24 +51,24 @@ roll = pi/1;
 quat = angle2quat(yaw,pitch,roll);
 
 bounds.lower.events = [0;0;0;0;0;0;1;0;0;0; %initial wheel speed, ang vel, quaternion
-    0;0;0;quat']; %final ang vel, quaternion
+    0;0;0;0;0;0;quat']; %final wheel speed, ang vel, quaternion
 bounds.upper.events = bounds.lower.events; 
 
 %path constraints
-bounds.lower.path = [0;0;0;0;0;0];
+bounds.lower.path = [0;0;0;0;0;0;0;0;0];
 bounds.upper.path = bounds.lower.path;
 
 
 CSMEprob.cost = 'CSMEPCCost';
 CSMEprob.dynamics = 'CSMEPCDynamics';
-CSMEprob.events = 'CSEvents';
+CSMEprob.events = 'CSPCEvents';
 CSMEprob.path = 'CSMEPCPath';
 
 CSMEprob.bounds = bounds;
 
 %algorithm.mode = 'accurate'; 
 
-algorithm.nodes = [32];					    % represents some measure of desired solution accuracy
+algorithm.nodes = [30];					    % represents some measure of desired solution accuracy
 
 % Call dido
 tStart= cputime;    % start CPU clock 
@@ -83,7 +83,7 @@ sound(y)
 t = primal.nodes;
 x = primal.states;
 u = primal.controls;
-savename = ['OEPC' num2str(algorithm.nodes) 'Nsoln'];
+savename = ['OEPCuv' num2str(algorithm.nodes) 'Nsoln'];
 save(savename,'t','u','x');
 
 %%
@@ -127,13 +127,10 @@ title('reaction wheel speeds (rad/s')
 
 %controls
 figure
-plot(t,u(1,:),'b');
+plot(t,u(1,:)+u(2,:),'b');
 hold on;
-plot(t,u(2,:),'b');
-plot(t,u(3,:),'g');
-plot(t,u(4,:),'g');
-plot(t,u(5,:),'r');
-plot(t,u(6,:),'r');
+plot(t,u(3,:)+u(4,:),'g');
+plot(t,u(5,:)+u(6,:),'r');
 title('controls');
 
 %hamiltonian
