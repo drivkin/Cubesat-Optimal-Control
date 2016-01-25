@@ -1,7 +1,6 @@
 
 NCsymbolic
-% v^2 cost
-load('50NodeTimeOptimalSolutionWorkspace');
+load('50NsolBBconst');
 
 %tf cost
 %load('50NodeTimeOptimalSolutionWorkspace');

@@ -16,13 +16,13 @@ u3 = sym('u3');
 x = [ww1;
     ww2;
     ww3;
+    wb1;
+    wb2;
+    wb3;
     q0;
     q1;
     q2;
-    q3;
-    wb1;
-    wb2;
-    wb3];
+    q3;];
     
 %sum of MOI tensor
 Isum = sym('Isum',[3 3]);
@@ -57,11 +57,14 @@ WCI = skew(wci);
 fww = [u1;
         u2;
         u3];
-    
-fq =1/2* [ -wb1*q1 - wb2*q2 - wb3*q3;
-            wb1*q0 + wb3*q2 - wb2*q3;
-            wb2*q0 - wb3*q1 + wb1*q3;
-            wb3*q0 + wb2*q1 - wb1*q2];
+%     
+% fq =[ -wb1*q1 - wb2*q2 - wb3*q3;
+%             wb1*q0 + wb3*q2 - wb2*q3;
+%             wb2*q0 - wb3*q1 + wb1*q3;
+%             wb3*q0 + wb2*q1 - wb1*q2];
+        
+fq = 0.5*quatmultDR([q0 q1 q2 q3],[0 wb1 wb2 wb3]);
+fq = fq.';
         
 term1 = WCI*Isum*wci;
 term2 = Iwx*aw1+Iwy*aw2+Iwz*aw3;
@@ -69,8 +72,8 @@ term3 = WCI*(Iwx*ww1v+Iwy*ww2v+Iwz*ww3v);
 fwb = IsumINV*(-term1 - term2 - term3);
 
 f = [fww;
-    fq;
-    fwb];
+    fwb;
+    fq;];
 
 
 %% Necessary conditions / costate stuff
@@ -105,7 +108,7 @@ end
 HMC = HMC.';
 
 for i = 1:10
-    lambdaDot(i) = -diff(H,x(i));
+    lambdaDot(i) = -diff(LoH,x(i));
 end
 lambdaDot = lambdaDot.';
         

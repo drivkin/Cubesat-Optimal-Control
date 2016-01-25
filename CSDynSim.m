@@ -1,5 +1,5 @@
 function [ xdot ] = CSDynSim( x,u )
-%Cubesat dynamics using DCM
+%Cubesat dynamics using quaternions
 %Constant Matrices
 %sumMOI is the sum of the moments of inertial off all the bodies (three
 %momentum wheels + the body) about their centers of mass and the moment of

@@ -1,0 +1,18 @@
+\begin{thebibliography}{1}
+
+\bibitem{Ross2007}
+I.~M. Ross, ``{A Beginner ’ s Guide to DIDO : a Matlab Application for
+  Solving Optimal Control Problems},''  tech. rep., Elissar, LLC, Monterey, CA
+  95942, 2007.
+
+\bibitem{Karpenko2014}
+M.~Karpenko, S.~Bhatt, N.~Bedrossian, and I.~M. Ross, ``{Flight Implementation
+  of Shortest-Time Maneuvers for Imaging Satellites},''  {\em Journal of
+  Guidance, Control, and Dynamics}, Vol.~37, No.~4, 2014, pp.~1069--1079,
+  10.2514/1.62867.
+
+\bibitem{Lee2014}
+U.~Lee and M.~Mesbahi, ``{Quaternion Based Optimal Spacecraft Reorientation},''
+   {\em Advances in the Astronautical Sciences}, Vol.~150, 2014, pp.~1--16.
+
+\end{thebibliography}

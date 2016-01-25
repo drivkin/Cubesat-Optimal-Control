@@ -1,4 +1,4 @@
-function [ xldot ] = CSFeasXL(xls,u,ld)
+function [ xldot ] = CSFeasXL(xls,u,ld,mu_num)
 %UNTITLED5 Summary of this function goes here
 %   Detailed explanation goes here
 persistent count
@@ -47,6 +47,7 @@ u3 = sym('u3');
 
 wci = [wb1 wb2 wb3].';
 lambda = sym('lambda',[10 1]);
+mu = sym('mu',[3 1]);
     
 %sum of MOI tensor
 Isum = sym('Isum',[3 3]);
@@ -58,10 +59,10 @@ Iwy = diag(sym('Iwy',[1 3]));
 Iwz = diag(sym('Iwz',[1 3]));
 
 allSyms ={ww1,ww2,ww3,wci,q0,q1,q2,q3,...
-    u1,u2,u3,lambda,Isum,IsumINV,...
+    u1,u2,u3,lambda,mu,Isum,IsumINV,...
     Iwx,Iwy,Iwz};
 allNums = {x(1),x(2),x(3),x(4:6),x(7),x(8),x(9),x(10),...
-    u(1),u(2),u(3),lam,sumMOI,sumMOIinv,...
+    u(1),u(2),u(3),lam,mu_num,sumMOI,sumMOIinv,...
     Iw1,Iw2,Iw3};
 
 AS = [];
