@@ -4,7 +4,7 @@ function [ QM ] = computeQualityMetric(primal,xsim)
 %final quaternion was and what it really was.
 
 xsim = xsim';
-xDIDO = primal.states
+xDIDO = primal.states;
 
 qDIDO = xDIDO(7:10,end);
 qsim = xsim(7:10,end);

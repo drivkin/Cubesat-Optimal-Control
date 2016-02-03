@@ -1,6 +1,6 @@
 %compares two files
-file1 = '3u_time_50N_soln_BC';
-file2 = '3u_master_50N_soln_BC';
+file1 = '3u_master_50N_soln_BC';
+file2 = '3u_u2_50N_soln_BC';
 
 load(file1);
 primal1 = primal;

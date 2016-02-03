@@ -1,3 +1,12 @@
 This is BibTeX, Version 0.99dThe top-level auxiliary file: DR AAS full paper v2_0_6.aux
 The style file: AAS_publication.bst
-Database file #1: C:/Users/Dmitriy/Documents/library.bib
+Database file #1: C:/Users/Dmitriy/Documents/References/library.bib
+Database file #2: C:/Users/Dmitriy/Documents/References/harleigh.bib
+Repeated entry---line 1 of file C:/Users/Dmitriy/Documents/References/harleigh.bib
+ : @inproceedings{Schaub2008
+ :                          ,
+I'm skipping whatever remains of this entry
+Warning--empty author in Faulhaber2014
+Warning--empty author in BCTdatasheet
+Warning--empty year in BCTdatasheet
+(There was 1 error message)

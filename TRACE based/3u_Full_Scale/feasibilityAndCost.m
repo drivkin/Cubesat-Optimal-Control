@@ -31,7 +31,7 @@ global costSF
 %     vec(4);
 %     vec(5)] * 1;
 
-load('3u_time_50N_soln_BC');
+load('3u_u2_50N_soln_BC');
 
 costSF = 1;
 %primal = designer2SI(primal)

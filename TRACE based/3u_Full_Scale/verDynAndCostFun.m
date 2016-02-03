@@ -22,9 +22,11 @@ k_t = .0181;  %motor torque constant (N*m/amp)
 k_e = .0181; %motor electrical constant (V*s/rad)
 mu_f = 1.35*10^-8 / .104719755;%dynamic friction constant
 
+R_f = k_e^2/mu_f; % resistor equivalent to the friction
+
 u2_factor = R_a/(k_t^2);
-uv_factor = 2*R_a*mu_f*k_e/k_t + k_e/k_t;
-v2_factor = R_a*mu_f^2*k_e^2 + k_e^2*mu_f;
+uv_factor = 2*R_a*k_e/(R_f*k_t) + k_e/k_t;
+v2_factor = R_a*k_e^2/(R_f^2) + k_e^2/R_f;
 
 cDots(6) = master_power(u,x(4:6),u2_factor,uv_factor,v2_factor);
 cDots(7) = truncated_master_power(u,x(4:6),u2_factor,uv_factor,v2_factor);

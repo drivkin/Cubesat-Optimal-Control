@@ -1,9 +1,14 @@
-\begin{thebibliography}{1}
+\begin{thebibliography}{10}
+
+\bibitem{Ross2012}
+I.~M. Ross and M.~Karpenko, ``{A review of pseudospectral optimal control: From
+  theory to flight},''  {\em Annual Reviews in Control}, Vol.~36, No.~2, 2012,
+  pp.~182--197, 10.1016/j.arcontrol.2012.09.002.
 
 \bibitem{Ross2007}
-I.~M. Ross, ``{A Beginner ’ s Guide to DIDO : a Matlab Application for
-  Solving Optimal Control Problems},''  tech. rep., Elissar, LLC, Monterey, CA
-  95942, 2007.
+I.~M. Ross, ``{A Beginner’s Guide to DIDO : a Matlab Application for Solving
+  Optimal Control Problems},''  tech. rep., Elissar, LLC, Monterey, CA 95942,
+  2007.
 
 \bibitem{Karpenko2014}
 M.~Karpenko, S.~Bhatt, N.~Bedrossian, and I.~M. Ross, ``{Flight Implementation
@@ -11,8 +16,74 @@ M.~Karpenko, S.~Bhatt, N.~Bedrossian, and I.~M. Ross, ``{Flight Implementation
   Guidance, Control, and Dynamics}, Vol.~37, No.~4, 2014, pp.~1069--1079,
   10.2514/1.62867.
 
+\bibitem{Develle2011}
+M.~J. Develle, {\em {Optimal Attitude Control Management For A Cubesat}}.
+\newblock Master's thesis, University of Central Florida, 2011.
+
+\bibitem{Kedare2014}
+S.~S. Kedare, {\em {Space Environment Modelling and Torque-Optimal Guidance for
+  CubeSat Applications}}.
+\newblock Master's thesis, Carleton University, 2014.
+
 \bibitem{Lee2014}
 U.~Lee and M.~Mesbahi, ``{Quaternion Based Optimal Spacecraft Reorientation},''
    {\em Advances in the Astronautical Sciences}, Vol.~150, 2014, pp.~1--16.
+
+\bibitem{Marsh2015}
+H.~Marsh, Q.~Gong, and M.~Karpenko, ``Minimum Energy Attitude Control,''  tech.
+  rep., Naval Postgraduate School, 2015.
+
+\bibitem{Blenden2012}
+R.~Blenden and H.~Schaub, ``{Regenerative Power-Optimal Reaction Wheel Attitude
+  Control},''  {\em Journal of Guidance, Control, and Dynamics}, Vol.~35,
+  No.~4, 2012, pp.~1208--1217, 10.2514/1.55493.
+
+\bibitem{Wisniewski2005}
+R.~Wisniewski and P.~Kulczycki, ``{Slew Maneuver Control for Spacecraft
+  Equipped with Star Camera and Reaction Wheels},''  {\em Control Engineering
+  Practice}, Vol.~13, No.~3, 2005, pp.~349--356,
+  10.1016/j.conengprac.2003.12.006.
+
+\bibitem{Schaub2008}
+H.~Schaub, ``{AIAA 2008-6259 Locally Power-Optimal Spacecraft Attitude Control
+  for Redundant Reaction Wheel Cluster},''  {\em AIAA/AAS Astrodynamics
+  Specialist Conference}, Honolulu, Hawaii, 2008.
+
+\bibitem{Shen1998}
+H.~Shen and P.~Tsiotras, ``{Time-Optimal Control of Axi-Symmetric Rigid
+  Spacecraft},''  {\em AIAA Guidance, Navigation, and Control Conference},
+  Boston, MA, 1998.
+
+\bibitem{Bilimoria1993}
+K.~Bilimoria and B.~Wei, ``Time-Optimal Three-Axis Reorientation of Rigid
+  Spacecraft,''  {\em Journal of Guidance, Control, and Dynamics}, Vol.~16,
+  No.~3, 1993, pp.~446--452.
+
+\bibitem{Melton2014}
+R.~G. Melton, ``{Hybrid methods for determining time-optimal, constrained
+  spacecraft reorientation maneuvers},''  {\em Acta Astronautica}, Vol.~94,
+  No.~1, 2014, pp.~294--301, 10.1016/j.actaastro.2013.05.007.
+
+\bibitem{Fleming2009}
+A.~Fleming, P.~Sekhavat, and I.~M. Ross, ``{On The Minimum-Time Reorientation
+  of a Rigid Body},''  {\em AIAA Guidance, Navigation, and Control Conference},
+  Chicago, IL, 2009.
+
+\bibitem{Fleming2004}
+A.~Fleming, {\em {Real-Time Optimal Slew Maneuver Design and control}}.
+\newblock Master's thesis, Naval Postgraduate School, 2004.
+
+\bibitem{Faulhaber2014}
+``{Series 2610 ... B Datasheet},''  tech. rep., Dr. Fritz Faulhaber GMBH {\&}
+  CO. KG, 2014.
+
+\bibitem{Betts2010}
+J.~Betts, {\em Practical Methods for Optimal Control and Estimation Using
+  Nonlinear Programming}.
+\newblock Society for Industrial and Applied Mathematics, 2010.
+
+\bibitem{BCTdatasheet}
+``{Micro Reaction Wheel},''  tech. rep., Blue Canyon Technologies, Boulder,
+  Colorado.
 
 \end{thebibliography}
